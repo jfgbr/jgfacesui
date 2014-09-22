@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<cc:interface componentType="termoCompromissoDialog">
+		<cc:attribute name="visible" type="java.lang.Boolean" />
+		<cc:attribute name="value" type="java.lang.Object" required="true" />
+		<cc:attribute name="header" type="java.lang.String" />
+		<cc:attribute name="viewOnly" type="java.lang.Boolean" />
+
+		<cc:attribute name="processAceitar" required="false" />
+		<cc:attribute name="updateAceitar" required="false" />
+
+		<cc:attribute name="actionAceitar" 
+			targetAttributeName="action"
+            method-signature="java.lang.String action()"/>
+            
+        <cc:attribute name="actionCancelar" 
+			targetAttributeName="action"
+            method-signature="java.lang.String action()"/>
+	</cc:interface>
+
+	<cc:implementation>
+		<p:dialog id="#{cc.id}Dlg" modal="true"
+			widgetVar="dlgTermoCompromisso" header="#{cc.header}"
+			draggable="false" closable="false" resizable="false"
+			visible="#{cc.visible}">
+			<p:inputTextarea value="#{cc.value}" readonly="true"
+				autoResize="false" cols="90" rows="20" />
+
+			<h:panelGroup layout="block" styleClass="db-linha-spacer" />
+
+
+			<c:choose>
+				<c:when test="#{cc.viewOnly}">
+					<p:commandButton id="btnOk" value="Ok"
+						oncomplete="dlgTermoCompromisso.hide();" process="@this"
+						update="@form" />
+				</c:when>
+				<c:otherwise>
+					<p:commandButton id="actionAceitar" action="#{cc.actionAceitar}"
+						value="Aceitar" update="#{cc.updateAceitar}"
+						process="#{cc.processAceitar}" />
+					<p:commandButton id="actionCancelar" value="Cancelar"
+						action="#{cc.actionCancelar}"
+						oncomplete="dlgTermoCompromisso.hide();" process="@this"
+						update="@form" />
+
+				</c:otherwise>
+			</c:choose>
+		</p:dialog>
+	</cc:implementation>
+
+</ui:composition>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:cc="http://java.sun.com/jsf/composite"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <cc:interface componentType="collapsiblePanel">
+        <cc:attribute name="collapsed" />
+        <cc:attribute name="header"/>
+        <cc:actionSource name="toggle"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <h:panelGroup layout="block" styleClass="collapsiblePanel-header" >
+            <h:commandButton id="toggle" actionListener="#{cc.toggle}" styleClass="collapsiblePanel-img"
+                    image="#{resource[cc.collapsed ? 'jgfacesui:plus.png' : 'jgfacesui:minus.png']}"/>
+             <h3><h:outputText value="#{cc.header}"/></h3>
+        </h:panelGroup>
+        <h:panelGroup layout="block" rendered="#{!cc.collapsed}">
+            <cc:insertChildren/>
+        </h:panelGroup>
+        <h:outputStylesheet library="jgfacesui" name="components.css" target="head"/>
+    </cc:implementation>
+
+</ui:composition>
